@@ -15,7 +15,7 @@ public class DataHandler {
 	public static final String LAST_NAME = "LAST_NAME";
 	public static final String PROFESSION = "PROFESSION";
 	public static final String EMAIL = "EMAIL";
-	public static final String USERNAME = "USERNAME";
+	public static final String USER_NAME = "USER_NAME";
 	public static final String PWD = "PWD";
 	public static final String USER_ID = "USER_ID";
 	public static final String TELEPHONE = "TELEPHONE";
@@ -23,43 +23,30 @@ public class DataHandler {
 	public static final String LICENSE_DETAILS_TABLE_NAME = "LICENSE_DETAILS";
 	public static final String LICENSE_NUMBER = "LICENSE_NUMBER";
 	public static final String LICENSE_ISSUE_DT = "LICENSE_ISSUE_DT";
-	public static final String LICENSE_EXPIRATION_DT = "LICENSE_EXPIRATION_DT";
+	public static final String LICENSE_EXPIRY_DT = "LICENSE_EXPIRY_DT";
 	public static final String STATE = "STATE";
-	public static final String LICENSE_USER_ID = "USER_ID";
+	public static final String LIC_USER_ID = "LIC_USER_ID";
 	
 	
 	public static final String STATUS_DETAILS_TABLE_NAME = "STATUS_DETAILS";
 	public static final String STATUS_DETAILS_STATUS_ID = "STATUS_ID";
 	public static final String STATUS_DESC = "STATUS_DESC";
 	
-	public static final String DB_NAME = "VMTest.db";
-	public static final int DB_VERSION = 1;
-	public static final  String PRAGMA = "PRAGMA foreign_keys=ON";
+	public static final String DB_NAME = "CME.db";
+	public static final int DB_VERSION = 3;
+	public static final  String PRAGMA = " PRAGMA foreign_keys = ON ; ";
 	public static final String USER_DETAILS_CREATE = " CREATE TABLE "
 			+ USER_DETAILS_TABLE_NAME
 			+ "( "
 			+ " FIRST_NAME TEXT NOT NULL,  MIDDLE_NAME TEXT, LAST_NAME TEXT NOT NULL, PROFESSION TEXT, EMAIL TEXT, USER_NAME TEXT UNIQUE," +
 			" PWD TEXT NOT NULL, USER_ID LONG PRIMARY KEY, TELEPHONE LONG ); ";
-	/*CREATE TABLE LICENSE_DETAILS(
-   LICENSE_NUMBER LONG PRIMARY KEY,
-   LICENSE_ISSUE_DT DATETIME,
-   LICENSE_EXPIRY_DT DATETIME CHECK (LICENSE_EXPIRY_DT >= LICENSE_ISSUE_DT),
-   STATE TEXT, -- IMPLEMENT CHECK CONSTRAINT
-   LIC_USER_ID LONG UNIQUE,
-   FOREIGN KEY (LIC_USER_ID) REFERENCES USER_DETAILS(USER_ID)
-   );
-	 * */
+	
 	public static final String LICENSE_DETAILS_CREATE = " CREATE TABLE "
-			+ USER_DETAILS_TABLE_NAME
+			+ LICENSE_DETAILS_TABLE_NAME
 			+ "( "
 			+ " LICENSE_NUMBER LONG PRIMARY KEY, LICENSE_ISSUE_DT DATETIME, LICENSE_EXPIRY_DT DATETIME CHECK (LICENSE_EXPIRY_DT >= LICENSE_ISSUE_DT)," +
 			"  STATE TEXT, LIC_USER_ID LONG UNIQUE, FOREIGN KEY (LIC_USER_ID) REFERENCES USER_DETAILS(USER_ID) ); ";
 
-	/*public static final String STATUS_DETAILS_CREATE = " CREATE TABLE "
-			+ STATUS_DETAILS_TABLE_NAME
-			+ "( "
-			+ " STATUS_ID INT PRIMARY KEY, STATUS_DESC TEXT);";
-*/
 	
 	DataBaseHelper dbHelper;
 	Context ctx;
@@ -80,10 +67,16 @@ public class DataHandler {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			try {
+				//db.execSQL("DROP TABLE "+USER_DETAILS_TABLE_NAME +" ; ");
+				//db.execSQL("DROP TABLE "+LICENSE_DETAILS_TABLE_NAME +" ; ");
 				db.execSQL(PRAGMA);
 				System.out.println("PRAGMA EXECUTED /////////////////////////////////////////////////////////////////////////////////// ");
+				System.out.println("User Details Create : "+USER_DETAILS_CREATE);
 				db.execSQL(USER_DETAILS_CREATE);
+				System.out.println("User Details Table Created");
+				System.out.println("License Details Create : "+LICENSE_DETAILS_CREATE);
 				db.execSQL(LICENSE_DETAILS_CREATE);
+				System.out.println("License Details Table Created");
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -109,7 +102,7 @@ public class DataHandler {
 	public long getMaxUserID() {
 		SQLiteDatabase sqlDB = dbHelper.getReadableDatabase();
 		if (sqlDB != null) {
-			String maxQuery = "SELECT MAX(USER_ID) FROM " + USER_DETAILS_TABLE_NAME;
+			String maxQuery = "SELECT MAX(USER_ID) FROM " + USER_DETAILS_TABLE_NAME +" ; ";
 			Long maxUserId = -1L;
 			Cursor c = sqlDB.rawQuery(maxQuery, null);
 			if (null != c && c.getCount() > 0) {
@@ -131,7 +124,7 @@ public class DataHandler {
 			boolean result = false;
 			Long noOfRows = -1L;
 			SQLiteDatabase sqlDB1 = dbHelper.getReadableDatabase();
-			String userIDQuery = "SELECT COUNT(USER_ID) FROM "+ USER_DETAILS_TABLE_NAME + " WHERE EMAIL = '"+ email + "';";
+			String userIDQuery = "SELECT COUNT(USER_ID) FROM "+ USER_DETAILS_TABLE_NAME + " WHERE EMAIL = '"+ email + "' ; ";
 			Cursor c = sqlDB1.rawQuery(userIDQuery, null);
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();
@@ -160,7 +153,7 @@ public class DataHandler {
 			userContent.put(LAST_NAME, lastName);
 			userContent.put(PROFESSION, profession);
 			userContent.put(EMAIL, email);
-			userContent.put(USERNAME, userName);
+			userContent.put(USER_NAME, userName);
 			userContent.put(PWD, passWord);
 			Long userIdLong = getMaxUserID();
 			if(userIdLong == -1){
@@ -171,15 +164,17 @@ public class DataHandler {
 			userContent.put(TELEPHONE, telephone);
 			
 			Long rowCountInsertedUserDetails = db.insert(USER_DETAILS_TABLE_NAME, null, userContent);
+			System.out.println("No of rows inserted in user_details : "+rowCountInsertedUserDetails);
 			Long rowCountInsertedLicenseDetails = -1L;
 			if(rowCountInsertedUserDetails != null && rowCountInsertedUserDetails > 0){
 				ContentValues licenseContent = new ContentValues();
 				licenseContent.put(LICENSE_NUMBER, licenseNum);
 				licenseContent.put(LICENSE_ISSUE_DT, licIssueDt);
-				licenseContent.put(LICENSE_EXPIRATION_DT, licExpDt);
+				licenseContent.put(LICENSE_EXPIRY_DT, licExpDt);
 				licenseContent.put(STATE, state);
-				licenseContent.put(LICENSE_USER_ID, String.valueOf(userIdLong));
+				licenseContent.put(LIC_USER_ID, String.valueOf(userIdLong));
 				rowCountInsertedLicenseDetails = db.insert(LICENSE_DETAILS_TABLE_NAME, null, licenseContent);
+				System.out.println("No of rows inserted in license_details : "+rowCountInsertedLicenseDetails);
 			}
 			if(rowCountInsertedUserDetails > 0 && rowCountInsertedLicenseDetails >0){
 				return 1L;
@@ -201,7 +196,7 @@ public class DataHandler {
 			Long maxNumber = -1L;
 			String userIDQuery = "SELECT USER_ID FROM "
 					+ USER_DETAILS_TABLE_NAME + " WHERE USER_NAME = '"
-					+ userName + "'";
+					+ userName + "' ; ";
 			Cursor c = sqlDB1.rawQuery(userIDQuery, null);
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();
@@ -376,7 +371,7 @@ public class DataHandler {
 			SQLiteDatabase sqlDB1 = dbHelper.getReadableDatabase();
 			String userIDQuery = "SELECT USER_ID,PWD FROM "
 					+ USER_DETAILS_TABLE_NAME + " WHERE EMAIL = '" + email
-					+ "';";
+					+ "' ; ";
 			Cursor c = sqlDB1.rawQuery(userIDQuery, null);
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();
@@ -402,9 +397,9 @@ public class DataHandler {
 		} else {
 			SQLiteDatabase sqlDB1 = dbHelper.getReadableDatabase();
 			Long emailRowCount = -1L;
-			String userNameQuery = "SELECT COUNT(*) FROM "
+			String userNameQuery = " SELECT COUNT(*) FROM "
 					+ USER_DETAILS_TABLE_NAME + " WHERE USER_NAME = '"
-					+ userName + "';";
+					+ userName + "' ; ";
 			Cursor c = sqlDB1.rawQuery(userNameQuery, null);
 			if (null != c && c.getCount() > 0) {
 				c.moveToFirst();

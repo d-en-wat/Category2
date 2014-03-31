@@ -23,7 +23,7 @@ import android.support.v4.app.NavUtils;
  * well.
  */
 public class LoginActivity extends Activity {
-	
+
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
 			"foo@example.com:hello", "bar@example.com:world" };
 
@@ -61,7 +61,8 @@ public class LoginActivity extends Activity {
 		mEmailView.setText(mEmail);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
-		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		mPasswordView
+				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
@@ -84,10 +85,10 @@ public class LoginActivity extends Activity {
 						attemptLogin();
 					}
 				});
-		
+
 		findViewById(R.id.register_button).setOnClickListener(
 				new View.OnClickListener() {
-					
+
 					@Override
 					public void onClick(View view) {
 						// TODO Auto-generated method stub
@@ -96,8 +97,8 @@ public class LoginActivity extends Activity {
 					}
 				});
 	}
-	
-	private void callRegister(){
+
+	private void callRegister() {
 		Intent intent = new Intent(this, RegisterActivity.class);
 		finish();
 		startActivity(intent);
@@ -139,13 +140,14 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
+
 	public final static boolean isValidEmail(CharSequence target) {
-	    if (TextUtils.isEmpty(target)) {
-	        return false;
-	    } else {
-	        return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
-	    }
+		if (TextUtils.isEmpty(target)) {
+			return false;
+		} else {
+			return android.util.Patterns.EMAIL_ADDRESS.matcher(target)
+					.matches();
+		}
 	}
 
 	/**
@@ -181,21 +183,20 @@ public class LoginActivity extends Activity {
 		}
 
 		// Check for a valid email address.
-		if(!isValidEmail(mEmail)){
+		if (!isValidEmail(mEmail)) {
 			mEmailView.setError(getString(R.string.error_invalid_email));
 			focusView = mEmailView;
 			cancel = true;
 		}
-		
-		/*if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
-			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
-			cancel = true;
-		}*/
+
+		/*
+		 * if (TextUtils.isEmpty(mEmail)) {
+		 * mEmailView.setError(getString(R.string.error_field_required));
+		 * focusView = mEmailView; cancel = true; } else if
+		 * (!mEmail.contains("@")) {
+		 * mEmailView.setError(getString(R.string.error_invalid_email));
+		 * focusView = mEmailView; cancel = true; }
+		 */
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first

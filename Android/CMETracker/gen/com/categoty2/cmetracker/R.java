@@ -10,7 +10,6 @@ package com.categoty2.cmetracker;
 public final class R {
     public static final class array {
         public static final int registration_professions=0x7f060000;
-        public static final int registration_states=0x7f060001;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -31,29 +30,29 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int action_forgot_password=0x7f090018;
         public static final int email=0x7f090003;
-        public static final int firstname=0x7f090009;
+        public static final int firstname=0x7f09000c;
         public static final int fullscreen_content=0x7f090017;
-        public static final int lastname=0x7f09000b;
-        public static final int license_expiry_dt=0x7f090010;
-        public static final int license_issue_dt=0x7f09000f;
+        public static final int lastname=0x7f09000e;
+        public static final int license_expiry_dt=0x7f090013;
+        public static final int license_issue_dt=0x7f090012;
         public static final int login=0x7f090005;
         public static final int login_form=0x7f090002;
         public static final int login_status=0x7f090000;
         public static final int login_status_message=0x7f090001;
-        public static final int medical_license_num=0x7f09000d;
-        public static final int middlename=0x7f09000a;
+        public static final int medical_license_num=0x7f090010;
+        public static final int middlename=0x7f09000d;
         public static final int password=0x7f090004;
-        public static final int profession=0x7f09000c;
-        public static final int reg_email=0x7f090012;
-        public static final int reg_password=0x7f090014;
+        public static final int profession=0x7f09000f;
+        public static final int reg_email=0x7f090009;
+        public static final int reg_password=0x7f09000b;
         public static final int register_button=0x7f090007;
         public static final int registration_status=0x7f090008;
         public static final int reset_button=0x7f090016;
         public static final int sign_in_button=0x7f090006;
-        public static final int state=0x7f09000e;
+        public static final int state=0x7f090011;
         public static final int submit_button=0x7f090015;
-        public static final int telephone=0x7f090011;
-        public static final int username=0x7f090013;
+        public static final int telephone=0x7f090014;
+        public static final int username=0x7f09000a;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
@@ -83,7 +82,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int prompt_email=0x7f050005;
         public static final int prompt_password=0x7f050006;
-        public static final int reg_error_email_registered=0x7f050025;
         public static final int reg_error_empty_email=0x7f050023;
         public static final int reg_error_empty_expirydt=0x7f050022;
         /**   errors 
@@ -104,6 +102,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int reg_error_noAtTheRate=0x7f05002b;
         public static final int reg_error_noDot=0x7f05002c;
         public static final int reg_error_pwd_short=0x7f050028;
+        public static final int reg_error_user_registered=0x7f050025;
         public static final int registration_email=0x7f050018;
         /**  Strings related to register 
          */

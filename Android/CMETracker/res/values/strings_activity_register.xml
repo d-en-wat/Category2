@@ -21,15 +21,15 @@
     <!--  errors -->
     <string name="reg_error_empty_firstname">First Name cannot be empty</string>
     <string name="reg_error_empty_lastname">Last Name cannot be empty</string>
-    <string name="reg_error_empty_stlicense">State License cannot be empty</string>
+    <string name="reg_error_empty_stlicense">State License Number cannot be empty</string>
     <string name="reg_error_empty_issuedt">License Issue Date cannot be empty</string>
-    <string name="reg_error_empty_expirydt">License Issue Date cannot be empty</string>
+    <string name="reg_error_empty_expirydt">License Expiry Date cannot be empty</string>
     <string name="reg_error_empty_email">Email address cannot be empty</string>
-    <string name="reg_error_empty_username">Email address cannot be empty</string>
-    <string name="reg_error_email_registered">User already registered</string>
+    <string name="reg_error_empty_username">Username cannot be empty</string>
+    <string name="reg_error_user_registered">User already registered</string>
     <string name="reg_error_invalid_email">Email address is invalid</string>
-    <string name="reg_error_empty_password">Passwordcannot be empty</string>
-    <string name="reg_error_pwd_short">Password is too short</string>
+    <string name="reg_error_empty_password">Password cannot be empty</string>
+    <string name="reg_error_pwd_short">Password Min length is 4</string>
     <string name="reg_error_incorrect_password">Password is incorrect</string>
     <string name="reg_error_field_max_email_length">Email length cannot be greater than 100 chars</string>
     <string name="reg_error_noAtTheRate">Email should have @</string>
@@ -48,13 +48,13 @@
     </string-array>
     
     <string name="registration_prompt_state">Select State</string>
-    <string-array name="registration_states">
+    <!-- <string-array name="registration_states">
         <item>-SELECT STATE-</item>
         <item>ARIZONA</item>
         <item>CALIFORNIA</item>
         <item>FLORIDA</item>
         <item>GEORGIA</item>
         <item>TEXAS</item>
-    </string-array>
+    </string-array> -->
     
 </resources>
