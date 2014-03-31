@@ -1,0 +1,60 @@
+<resources>
+
+    <string name="title_activity_register">Register</string>
+
+    <!-- Strings related to register -->
+    
+     <string name="registration_first_name"><b>First Name</b></string>
+     <string name="registration_middle_name"><b>Middle Name</b></string>
+     <string name="registration_last_name"><b>Last Name</b></string>
+     <string name="registration_license_number"><b>State Medical License #</b></string>
+     <string name="registration_license_issue_date"><b>License Issue Date</b></string>
+     <string name="registration_license_expiry_date"><b>License Expiry Date</b></string>
+     <string name="registration_telephone"><b>Telephone</b></string>
+     <string name="registration_email"><b>Email</b></string>
+     <string name="registration_username"><b>User Name</b></string>
+     <string name="registration_password"><b>Password</b></string>
+    <string name="login_progress_signing_up">Registering&#8230;</string>
+    <string name="action_submit"><b>Submit</b></string>
+    <string name="action_reset"><b>Reset</b></string> 
+     
+    <!--  errors -->
+    <string name="reg_error_empty_firstname">First Name cannot be empty</string>
+    <string name="reg_error_empty_lastname">Last Name cannot be empty</string>
+    <string name="reg_error_empty_stlicense">State License cannot be empty</string>
+    <string name="reg_error_empty_issuedt">License Issue Date cannot be empty</string>
+    <string name="reg_error_empty_expirydt">License Issue Date cannot be empty</string>
+    <string name="reg_error_empty_email">Email address cannot be empty</string>
+    <string name="reg_error_empty_username">Email address cannot be empty</string>
+    <string name="reg_error_email_registered">User already registered</string>
+    <string name="reg_error_invalid_email">Email address is invalid</string>
+    <string name="reg_error_empty_password">Passwordcannot be empty</string>
+    <string name="reg_error_pwd_short">Password is too short</string>
+    <string name="reg_error_incorrect_password">Password is incorrect</string>
+    <string name="reg_error_field_max_email_length">Email length cannot be greater than 100 chars</string>
+    <string name="reg_error_noAtTheRate">Email should have @</string>
+    <string name="reg_error_noDot">Email should have .</string>
+    <string name="registration_prompt_profession">Select Profession</string>
+    <string name="reg_error_field_more_at_rate">Email cannot have 2 @</string>
+    <string name="reg_error_justdotatrate">Email cannot have just @ and .</string>
+    <string name="reg_error_min_length_email">Email min length is 5</string>
+    <string name="reg_error_max_length_pwd">Password max length is 50</string>
+    
+    <string-array name="registration_professions">
+        <item>-SELECT PROFESSION-</item>
+        <item>MEDICAL DOCTOR</item>
+        <item>OESTEOPATHIC PHYSICIAN</item> 
+        <item>PHYSICIAN ASSISTANTS</item>      
+    </string-array>
+    
+    <string name="registration_prompt_state">Select State</string>
+    <string-array name="registration_states">
+        <item>-SELECT STATE-</item>
+        <item>ARIZONA</item>
+        <item>CALIFORNIA</item>
+        <item>FLORIDA</item>
+        <item>GEORGIA</item>
+        <item>TEXAS</item>
+    </string-array>
+    
+</resources>
