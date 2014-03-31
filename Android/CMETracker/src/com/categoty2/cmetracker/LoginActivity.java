@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -91,8 +92,15 @@ public class LoginActivity extends Activity {
 					public void onClick(View view) {
 						// TODO Auto-generated method stub
 						// method call to Register activity
+						callRegister();
 					}
 				});
+	}
+	
+	private void callRegister(){
+		Intent intent = new Intent(this, RegisterActivity.class);
+		finish();
+		startActivity(intent);
 	}
 
 	/**
