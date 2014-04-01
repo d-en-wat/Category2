@@ -3,8 +3,6 @@ package com.categoty2.cmetracker;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +10,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,18 +20,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
-	private static final String PREFRENCES_NAME = "myPrefs";
 	private UserRegistrationTask mAuthTask = null;
 	Button submit;
 	Button reset;
 	DataHandler dbHandler;
 	// Values for email and password at the time of the login attempt.
-	private String userRegistered = new String("");
-
 	SharedPreferences SP;
 
 	private String mFirstName;
@@ -66,9 +59,9 @@ public class RegisterActivity extends Activity {
 
 	private Spinner mProfessionSpinner;
 	private Spinner mStateSpinner;
-	private View mLoginFormView;
+	/*private View mLoginFormView;
 	private View mLoginStatusView;
-	private TextView mLoginStatusMessageView;
+	private TextView mLoginStatusMessageView;*/
 
 	private void nextActivity() {
 		// Code to change to go to next page
@@ -102,9 +95,7 @@ public class RegisterActivity extends Activity {
 		submit = (Button) findViewById(R.id.submit_button);
 		reset = (Button) findViewById(R.id.reset_button);
 		addListenerOnSpinnerItemSelection();
-		mLoginFormView = findViewById(R.id.login_form);
-		mLoginStatusView = findViewById(R.id.login_status);
-		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+		
 
 	}
 
@@ -165,7 +156,6 @@ public class RegisterActivity extends Activity {
 		return true;
 	}
 
-	@SuppressWarnings("rawtypes")
 	public void addStatesSpinner() {
 		mStateSpinner = (Spinner) findViewById(R.id.state);
 		List<String> stateList = new ArrayList<String>();
@@ -198,7 +188,7 @@ public class RegisterActivity extends Activity {
 	 */
 	public void submit(View view) {
 		try {
-			Log.i("RegisterActivity : submit : ", "Entered ");
+			
 			// Reset errors
 			mEmailView.setError(null);
 			mUserNameView.setError(null);
@@ -210,7 +200,6 @@ public class RegisterActivity extends Activity {
 			mLicIssueDtView.setError(null);
 			mLicExpDtView.setError(null);
 			mTelephoneView.setError(null);
-			
 
 			// Reset Form
 			mEmail = null;
@@ -223,13 +212,17 @@ public class RegisterActivity extends Activity {
 			mLicIssueDt = null;
 			mLicExpDt = null;
 			mTelephone = null;
-			
 
 			atCount = 0;
 			dotCount = 0;
 			if (mAuthTask != null) {
 				return;
 			}
+			mEmail = mEmailView.getText().toString();
+			mEmail = mEmail.toLowerCase();
+			mPassword = mPasswordView.getText().toString();
+			mUserName = mUserNameView.getText().toString();
+			mUserName = mUserName.toLowerCase();
 			mFirstName = mFirstNameView.getText().toString();
 			mFirstName = mFirstName.toLowerCase();
 			mMiddleName = mMiddleNameView.getText().toString();
@@ -240,11 +233,7 @@ public class RegisterActivity extends Activity {
 			mLicIssueDt = mLicIssueDtView.getText().toString();
 			mLicExpDt = mLicExpDtView.getText().toString();
 			mTelephone = mTelephoneView.getText().toString();
-			mEmail = mEmailView.getText().toString();
-			mEmail = mEmail.toLowerCase();
-			mPassword = mPasswordView.getText().toString();
-			mUserName = mUserNameView.getText().toString();
-			mUserName = mUserName.toLowerCase();
+			
 
 			mProfession = String.valueOf(mProfessionSpinner.getSelectedItem());
 			mState = String.valueOf(mStateSpinner.getSelectedItem());
@@ -252,11 +241,6 @@ public class RegisterActivity extends Activity {
 			dbHandler = new DataHandler(getBaseContext());
 			dbHandler.open();
 			String userRegistered = null;
-			if (!TextUtils.isEmpty(mUserName)) {
-				userRegistered = dbHandler.validateUserName(mUserName);
-				Log.i("Is user already registered : ", userRegistered);
-			} 
-
 			boolean cancel = false;
 			View focusView = null;
 			for (int i = 0; i < mEmail.length(); i++) {
@@ -267,20 +251,17 @@ public class RegisterActivity extends Activity {
 					dotCount++;
 				}
 			}
-			if (TextUtils.isEmpty(mEmail)) { // check if the email is
-				// null or not
+			
+			if (TextUtils.isEmpty(mEmail) == true) { 
 				mEmailView.setError(getString(R.string.reg_error_empty_email));
 				focusView = mEmailView;
 				cancel = true;
-			} else if (mEmail.length() < 5) { // check if the email is null or
-				// not
-				mEmailView
-						.setError(getString(R.string.reg_error_min_length_email));
+			} else if (mEmail.length() < 5) { 
+				mEmailView.setError(getString(R.string.reg_error_min_length_email));
 				focusView = mEmailView;
 				cancel = true;
 			} else if (mEmail.length() > 100) {
-				mEmailView
-						.setError(getString(R.string.reg_error_field_max_email_length));
+				mEmailView.setError(getString(R.string.reg_error_field_max_email_length));
 				focusView = mEmailView;
 				cancel = true;
 			} else if (atCount == 0) {
@@ -301,27 +282,14 @@ public class RegisterActivity extends Activity {
 					focusView = mEmailView;
 					cancel = true;
 				}
-			} else if (TextUtils.isEmpty(mUserName)) { // check if the username
-				// is null or not
-				System.out.println("Username is empty");
+			}
+			else if (TextUtils.isEmpty(mUserName) == true) { 
 				mUserNameView.setError(getString(R.string.reg_error_empty_username));
 				focusView = mUserNameView;
 				cancel = true;
-			} else if (userRegistered.equalsIgnoreCase("User Present")) { // Check
-				// if
-				// user 
-				// has
-				// already
-				// registered
-				// or not .
-				mUserNameView
-						.setError(getString(R.string.reg_error_user_registered));
-				focusView = mUserNameView;
-				cancel = true;
-			} else if (mPassword == null & mPassword.length() == 0) { // check if the password
-				// is empty or not
-				mPasswordView
-						.setError(getString(R.string.reg_error_empty_password));
+			} else if (TextUtils.isEmpty(mPassword) == true) { 
+				
+				mPasswordView.setError(getString(R.string.reg_error_empty_password));
 				focusView = mPasswordView;
 				cancel = true;
 			} else if (mPassword.length() < 4) {
@@ -333,68 +301,48 @@ public class RegisterActivity extends Activity {
 						.setError(getString(R.string.reg_error_max_length_pwd));
 				focusView = mPasswordView;
 				cancel = true;
-			} else if (mFirstName == null & mFirstName.length() == 0) { // check if the first
-														// name is
-														// empty or not
-				mFirstNameView
-						.setError(getString(R.string.reg_error_empty_firstname));
+			} else if (TextUtils.isEmpty(mFirstName) == true) { 
+				mFirstNameView.setError(getString(R.string.reg_error_empty_firstname));
 				focusView = mFirstNameView;
 				cancel = true;
-			} else if (mLastName == null & mLastName.length() == 0) { // check if the Last Name
-														// is empty or not
-				mLastNameView
-						.setError(getString(R.string.reg_error_empty_lastname));
+			} else if (TextUtils.isEmpty(mLastName) == true ) { 
+				mLastNameView.setError(getString(R.string.reg_error_empty_lastname));
 				focusView = mLastNameView;
 				cancel = true;
-			} else if (mProfession.equalsIgnoreCase("-SELECT PROFESSION-")) { // Check
-																				// if
-																				// profession
-																				// is
-																				// selected
-																				// or
-																				// not
-				Toast.makeText(RegisterActivity.this,
-						"Please Select your Profession !!", Toast.LENGTH_LONG)
-						.show();
+			} else if (mProfession.equalsIgnoreCase("-SELECT PROFESSION-")) { 
+				Toast.makeText(RegisterActivity.this,"Please Select your Profession !!", Toast.LENGTH_LONG).show();
 				return;
-			} else if (mStateLicNum == null & mStateLicNum.length() == 0) { // check if the state
-															// license number is
-															// empty or not
-				mStateLicNumView
-						.setError(getString(R.string.reg_error_empty_stlicense));
+			} else if (TextUtils.isEmpty(mStateLicNum)== true) { 
+				mStateLicNumView.setError(getString(R.string.reg_error_empty_stlicense));
 				focusView = mStateLicNumView;
 				cancel = true;
-			} else if (mState.equalsIgnoreCase("-SELECT STATE-")) { // check if
-																	// the state
-																	// is
-																	// selected
-																	// or not
-				Toast.makeText(RegisterActivity.this,
-						"Please Select the State !!", Toast.LENGTH_LONG).show();
+			} else if (mState.equalsIgnoreCase("-SELECT STATE-")) { 
+				Toast.makeText(RegisterActivity.this,"Please Select the State !!", Toast.LENGTH_LONG).show();
 				return;
-			} else if (mLicIssueDt == null & mLicIssueDt.length() == 0) { // check if the License
-															// Issue Date is
-															// empty or not
-				mLicIssueDtView
-						.setError(getString(R.string.reg_error_empty_issuedt));
+			} else if (TextUtils.isEmpty(mLicIssueDt)== true) { 
+				mLicIssueDtView.setError(getString(R.string.reg_error_empty_issuedt));
 				focusView = mLicIssueDtView;
 				cancel = true;
-			} else if (mLicExpDt == null & mLicExpDt.length() == 0 ) { // check if the License
-														// Issue Date is empty
-														// or not
-				mLicExpDtView
-						.setError(getString(R.string.reg_error_empty_expirydt));
+			} else if (TextUtils.isEmpty(mLicExpDt)== true) { 
+				mLicExpDtView.setError(getString(R.string.reg_error_empty_expirydt));
 				focusView = mLicExpDtView;
 				cancel = true;
+			} else if (TextUtils.isEmpty(mUserName) == false) {
+				userRegistered = dbHandler.validateUserName(mUserName);
+				System.out.println("is user Registered : "+userRegistered);
+				if (userRegistered.equalsIgnoreCase("User Present")) {
+					mUserNameView.setError(getString(R.string.reg_error_user_registered));
+					focusView = mUserNameView;
+					cancel = true;
+				}
 			}
-
+			System.out.println("Cancel status : "+cancel);
 			if (cancel) {
 				focusView.requestFocus();
 			} else {
 				// Show a progress spinner, and kick off a background task to
 				// perform the user registration attempt.
-				mLoginStatusMessageView
-						.setText(R.string.login_progress_signing_up);
+				// mLoginStatusMessageView.setText(R.string.login_progress_signing_up);
 				// showProgress(true);
 
 				long rowsInserted = dbHandler.registerUser(mFirstName,
@@ -420,7 +368,7 @@ public class RegisterActivity extends Activity {
 							Toast.LENGTH_LONG).show();
 				}
 			}
-			Log.i("RegisterActivity : submit : ", "End of try block ");
+			
 		} catch (Exception exception) {
 			exception.printStackTrace();
 			Log.e("RegisterActivity", exception.getMessage().toString());
@@ -429,14 +377,13 @@ public class RegisterActivity extends Activity {
 				dbHandler.close();
 			}
 		}
-		Log.i("RegisterActivity : submit : ", "Exit ");
 	}
 
 	/**
 	 * Shows the progress UI and hides the login form.
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-	private void showProgress(final boolean show) {
+	/*private void showProgress(final boolean show) {
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
@@ -471,7 +418,7 @@ public class RegisterActivity extends Activity {
 			mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
 			mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 		}
-	}
+	}*/
 
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
@@ -480,7 +427,7 @@ public class RegisterActivity extends Activity {
 	public class UserRegistrationTask extends AsyncTask<Void, Void, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
+			
 
 			try {
 				// Simulate network access.
@@ -488,7 +435,7 @@ public class RegisterActivity extends Activity {
 			} catch (InterruptedException e) {
 				return false;
 			}
-			// TODO: register the new account here.
+			
 			return true;
 		}
 
@@ -507,7 +454,7 @@ public class RegisterActivity extends Activity {
 		@Override
 		protected void onCancelled() {
 			mAuthTask = null;
-			showProgress(false);
+			//showProgress(false);
 		}
 	}
 
