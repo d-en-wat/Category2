@@ -26,7 +26,7 @@ public class RegisterActivity extends Activity {
 	private UserRegistrationTask mAuthTask = null;
 	Button submit;
 	Button reset;
-	DataHandler dbHandler;
+	DataBaseHandler dbHandler;
 	// Values for email and password at the time of the login attempt.
 	SharedPreferences SP;
 
@@ -238,8 +238,8 @@ public class RegisterActivity extends Activity {
 			mProfession = String.valueOf(mProfessionSpinner.getSelectedItem());
 			mState = String.valueOf(mStateSpinner.getSelectedItem());
 
-			dbHandler = new DataHandler(getBaseContext());
-			dbHandler.open();
+			dbHandler = new DataBaseHandler(getBaseContext());
+			
 			String userRegistered = null;
 			boolean cancel = false;
 			View focusView = null;
@@ -329,14 +329,12 @@ public class RegisterActivity extends Activity {
 				cancel = true;
 			} else if (TextUtils.isEmpty(mUserName) == false) {
 				userRegistered = dbHandler.validateUserName(mUserName);
-				System.out.println("is user Registered : "+userRegistered);
 				if (userRegistered.equalsIgnoreCase("User Present")) {
 					mUserNameView.setError(getString(R.string.reg_error_user_registered));
 					focusView = mUserNameView;
 					cancel = true;
 				}
 			}
-			System.out.println("Cancel status : "+cancel);
 			if (cancel) {
 				focusView.requestFocus();
 			} else {

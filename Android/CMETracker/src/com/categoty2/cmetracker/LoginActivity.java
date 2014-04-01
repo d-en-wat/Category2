@@ -36,7 +36,7 @@ public class LoginActivity extends Activity {
 	 */
 	private UserLoginTask mAuthTask = null;
 	
-	private DataHandler dbHandler;
+	private DataBaseHandler dbHandler;
 	
 	public static final String MyPREFERENCES = "MyPreferences" ;
 	SharedPreferences SP;
@@ -62,7 +62,7 @@ public class LoginActivity extends Activity {
 		
 		SP = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
-		dbHandler = new DataHandler(getBaseContext());
+		dbHandler = new DataBaseHandler(getBaseContext());
 		
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
@@ -295,7 +295,7 @@ public class LoginActivity extends Activity {
 
 			// chk against DB for password validation			
 			
-			dbHandler.open();
+			
 			int retVal = dbHandler.validateUser(mEmail, mPassword);
 			dbHandler.close();
 			return 1 == retVal;
