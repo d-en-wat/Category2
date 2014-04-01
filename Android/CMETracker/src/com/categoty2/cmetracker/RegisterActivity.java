@@ -7,9 +7,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,7 +35,7 @@ public class RegisterActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String userRegistered = new String("");
 
-	
+	SharedPreferences SP;
 
 	private String mFirstName;
 	private String mMiddleName;
@@ -79,10 +82,14 @@ public class RegisterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 		setupActionBar();
+		
+		SP = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
 		mEmailView = (EditText) findViewById(R.id.reg_email);
+		mEmailView.setText(SP.getString("email", ""));
 		mUserNameView = (EditText) findViewById(R.id.username);
 		mPasswordView = (EditText) findViewById(R.id.reg_password);
+		mPasswordView.setText(SP.getString("pwd", ""));
 		mFirstNameView = (EditText) findViewById(R.id.firstname);
 		mMiddleNameView = (EditText) findViewById(R.id.middlename);
 		mLastNameView = (EditText) findViewById(R.id.lastname);
@@ -285,26 +292,24 @@ public class RegisterActivity extends Activity {
 				focusView = mEmailView;
 				cancel = true;
 			} else if (atCount > 1) {
-				mEmailView
-						.setError(getString(R.string.reg_error_field_more_at_rate));
+				mEmailView.setError(getString(R.string.reg_error_field_more_at_rate));
 				focusView = mEmailView;
 				cancel = true;
 			} else if (mEmail.length() == 2) {
 				if (atCount == 1 && dotCount == 1) {
-					mEmailView
-							.setError(getString(R.string.reg_error_justdotatrate));
+					mEmailView.setError(getString(R.string.reg_error_justdotatrate));
 					focusView = mEmailView;
 					cancel = true;
 				}
-			} else if (mUserName == null & mUserName.length() == 0) { // check if the username
+			} else if (TextUtils.isEmpty(mUserName)) { // check if the username
 				// is null or not
-				mUserNameView
-						.setError(getString(R.string.reg_error_empty_username));
+				System.out.println("Username is empty");
+				mUserNameView.setError(getString(R.string.reg_error_empty_username));
 				focusView = mUserNameView;
 				cancel = true;
 			} else if (userRegistered.equalsIgnoreCase("User Present")) { // Check
 				// if
-				// user
+				// user 
 				// has
 				// already
 				// registered
@@ -381,7 +386,7 @@ public class RegisterActivity extends Activity {
 						.setError(getString(R.string.reg_error_empty_expirydt));
 				focusView = mLicExpDtView;
 				cancel = true;
-			} else
+			}
 
 			if (cancel) {
 				focusView.requestFocus();

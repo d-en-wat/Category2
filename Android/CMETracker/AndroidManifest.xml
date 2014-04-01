@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
     <application
@@ -33,10 +33,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.categoty2.cmetracker.Start" />
         </activity>
-        
         <activity
             android:name="com.categoty2.cmetracker.RegisterActivity"
             android:label="@string/title_activity_register"
+            android:parentActivityName="com.categoty2.cmetracker.Start"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.categoty2.cmetracker.Start" />
+        </activity>
+        <activity
+            android:name="com.categoty2.cmetracker.DashBoard"
+            android:label="@string/title_activity_dash_board"
             android:parentActivityName="com.categoty2.cmetracker.Start"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <meta-data

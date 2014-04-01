@@ -4,10 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -23,10 +26,7 @@ import android.support.v4.app.NavUtils;
  * well.
  */
 public class LoginActivity extends Activity {
-
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
-
+	
 	/**
 	 * The default email to populate the email field with.
 	 */
@@ -36,6 +36,12 @@ public class LoginActivity extends Activity {
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
 	private UserLoginTask mAuthTask = null;
+	
+	private DataHandler dbHandler;
+	
+	public static final String MyPREFERENCES = "MyPreferences" ;
+	SharedPreferences SP;
+	SharedPreferences.Editor editor;
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
@@ -54,7 +60,11 @@ public class LoginActivity extends Activity {
 
 		setContentView(R.layout.activity_login);
 		setupActionBar();
+		
+		SP = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+		dbHandler = new DataHandler(getBaseContext());
+		
 		// Set up the login form.
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
@@ -102,6 +112,21 @@ public class LoginActivity extends Activity {
 		Intent intent = new Intent(this, RegisterActivity.class);
 		finish();
 		startActivity(intent);
+	}
+	
+	private void callDashBoard(){
+		Intent intent = new Intent(this, DashBoard.class);
+		finish();
+		startActivity(intent);
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();  // Always call the superclass method first
+	    editor = SP.edit();
+	    editor.putString("email", mEmailView.getText().toString());
+	    editor.putString("pwd", mPasswordView.getText().toString());
+	    editor.commit();
 	}
 
 	/**
@@ -269,16 +294,12 @@ public class LoginActivity extends Activity {
 				return false;
 			}
 
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
-			return true;
+			// chk against DB for password validation			
+			
+			dbHandler.open();
+			int retVal = dbHandler.validateUser(mEmail, mPassword);
+			dbHandler.close();
+			return 1 == retVal;
 		}
 
 		@Override
@@ -287,10 +308,9 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				finish();
+				callDashBoard();
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_incorrect_username_password));
 				mPasswordView.requestFocus();
 			}
 		}
