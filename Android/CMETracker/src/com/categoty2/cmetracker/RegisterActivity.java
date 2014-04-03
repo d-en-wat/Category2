@@ -6,7 +6,9 @@ import java.util.List;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 	private UserRegistrationTask mAuthTask = null;
+	private static int counter =0;
 	Button submit;
 	Button reset;
 	DataBaseHandler dbHandler;
@@ -65,8 +68,8 @@ public class RegisterActivity extends Activity {
 
 	private void nextActivity() {
 		// Code to change to go to next page
-		// Intent intent = new Intent(this, class);
-		// startActivity(intent);
+		 Intent intent = new Intent(this, DashBoard.class);
+		 startActivity(intent);
 	}
 
 	@Override
@@ -87,6 +90,10 @@ public class RegisterActivity extends Activity {
 		mMiddleNameView = (EditText) findViewById(R.id.middlename);
 		mLastNameView = (EditText) findViewById(R.id.lastname);
 		mStateLicNumView = (EditText) findViewById(R.id.medical_license_num);
+		if(counter == 0){
+			counter++;
+		}
+		System.out.println("Counter = "+counter);
 		addStatesSpinner();
 		mLicIssueDtView = (EditText) findViewById(R.id.license_issue_dt);
 		mLicExpDtView = (EditText) findViewById(R.id.license_expiry_dt);
@@ -159,16 +166,23 @@ public class RegisterActivity extends Activity {
 	public void addStatesSpinner() {
 		mStateSpinner = (Spinner) findViewById(R.id.state);
 		List<String> stateList = new ArrayList<String>();
-		stateList.add("-SELECT STATE-");
-		stateList.add("ARIZONA");
-		stateList.add("CALIFORNIA");
-		stateList.add("GEORGIA");
-		stateList.add("FLORIDA");
-		stateList.add("TEXAS");
+		
+		
+			
+			stateList.add("-SELECT STATE-");
+			stateList.add("KANSAS");
+			stateList.add("MICHIGAN");
+			stateList.add("NORTH CAROLINA");
+			stateList.add("TEXAS");
+			stateList.add("VIRGINIA");
+		
 		ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, stateList);
 		stateAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		if(mStateSpinner != null){
+			System.out.println("spinner is not null");
+		}
 		mStateSpinner.setAdapter(stateAdapter);
 
 	}
@@ -359,17 +373,20 @@ public class RegisterActivity extends Activity {
 					 */Toast.makeText(getBaseContext(),
 							"Registered Successfully", Toast.LENGTH_LONG)
 							.show();
-					// mAuthTask = new UserRegistrationTask();
-					// mAuthTask.execute((Void) null);
+					 mAuthTask = new UserRegistrationTask();
+					 mAuthTask.execute((Void) null);
 				} else {
 					Toast.makeText(getBaseContext(), "Error in Registration",
 							Toast.LENGTH_LONG).show();
 				}
 			}
 			
-		} catch (Exception exception) {
+		}catch (SQLException exception) {
 			exception.printStackTrace();
-			Log.e("RegisterActivity", exception.getMessage().toString());
+			Log.e("RegisterActivity : register User : SQL Exception : ", exception.getMessage().toString());
+		}catch (Exception exception) {
+			exception.printStackTrace();
+			Log.e("RegisterActivity : register User : Othr Exception : ", exception.getMessage().toString());
 		} finally {
 			if (dbHandler != null) {
 				dbHandler.close();
