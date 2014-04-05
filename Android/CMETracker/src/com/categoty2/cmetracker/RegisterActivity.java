@@ -1,10 +1,13 @@
 package com.categoty2.cmetracker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -62,6 +66,8 @@ public class RegisterActivity extends Activity {
 
 	private Spinner mProfessionSpinner;
 	private Spinner mStateSpinner;
+	private DatePickerDialog dpDialog;
+	private String date;
 	/*private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;*/
@@ -103,9 +109,37 @@ public class RegisterActivity extends Activity {
 		reset = (Button) findViewById(R.id.reset_button);
 		addListenerOnSpinnerItemSelection();
 		
+		mLicIssueDtView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dpDialog = showDatePicker(v);	
+				dpDialog.show();
+			}
+		});
+		
+		mLicExpDtView.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {				
+				dpDialog = showDatePicker(v);	
+				dpDialog.show();
+			}
+		});		
 
 	}
 
+	private DatePickerDialog showDatePicker(final View v){
+		final Calendar cal = new GregorianCalendar();
+		DatePickerDialog myDatePickerDialog = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener()  {
+		    @Override
+		    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		    	StringBuilder sb = new StringBuilder("");
+		    	sb.append(monthOfYear+1).append("/").append(dayOfMonth).append("/").append(year);
+		    	((EditText)v).setText(sb.toString());
+		    }
+		} , cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)); // <- This will set the default date that will display on the DatePickerDialog when displayed
+		return myDatePickerDialog;
+	}
+	
 	public void reset(View view) {
 		Log.i("Register Acticity : Reset", "Entered");
 		mUserNameView.setText("");
