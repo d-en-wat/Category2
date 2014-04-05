@@ -21,7 +21,7 @@ public class Start extends Activity {
 		
 		SP = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);		
 		if(SP.getBoolean("isLoggedIn", false)){
-			nxtIntent = new Intent(Start.this, DashBoard.class);
+			nxtIntent = new Intent(Start.this, TestDashActivity.class);
 		}else{
 			nxtIntent = new Intent(Start.this, LoginActivity.class);
 		}

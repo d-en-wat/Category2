@@ -15,5 +15,38 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_incorrect_username_password">username/password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="activity_select">Select Activity</string>
+
+    <string-array name="activity_types">
+        <item>SELECT ACTIVITY</item>
+        <item>Teaching</item>
+        <item>Online Learning</item>
+        <item>Reading</item>
+        <item>Peer Consultation</item>
+        <item>Discussion</item>
+        <item>Self-Assessment</item>
+        <item>Writing</item>
+        <item>Preceptor ship</item>
+        <item>Research</item>
+        <item>Peer Review</item>
+        <item>Non-Certified Activities</item>
+    </string-array>
+
+    <string name="credits">Credits</string>
+    <string name="activity_start_dt">Start Date</string>
+    <string name="activity_end_dt">End Date</string>
+    <string name="cancel_activity">Cancel</string>
+    <string name="submit_activity">Submit</string>
 
 </resources>
+
+
+
+
+
+
+
+
+
+
+

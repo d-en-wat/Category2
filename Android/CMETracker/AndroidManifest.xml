@@ -51,6 +51,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.categoty2.cmetracker.Start" />
         </activity>
+        <activity
+            android:name="com.categoty2.cmetracker.TestDashActivity"
+            android:label="@string/title_activity_test_dash"
+            android:parentActivityName="com.categoty2.cmetracker.Start"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.categoty2.cmetracker.Start" />
+        </activity>
     </application>
 
 </manifest>

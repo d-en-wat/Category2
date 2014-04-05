@@ -119,7 +119,7 @@ public class LoginActivity extends Activity {
 	}
 	
 	private void callDashBoard(){
-		Intent intent = new Intent(this, DashBoard.class);
+		Intent intent = new Intent(this, TestDashActivity.class);
 		editor = SP.edit();
 		editor.putBoolean("isLoggedIn", true);
 		editor.commit();

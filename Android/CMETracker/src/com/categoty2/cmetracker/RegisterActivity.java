@@ -75,7 +75,7 @@ public class RegisterActivity extends Activity {
 
 	private void nextActivity() {
 		// Code to change to go to next page
-		Intent intent = new Intent(this, DashBoard.class);
+		Intent intent = new Intent(this, TestDashActivity.class);
 		editor = SP.edit();
 		editor.putBoolean("isLoggedIn", true);
 		editor.commit();
@@ -229,8 +229,7 @@ public class RegisterActivity extends Activity {
 
 	public void addListenerOnSpinnerItemSelection() {
 		mProfessionSpinner = (Spinner) findViewById(R.id.profession);
-		mProfessionSpinner
-				.setOnItemSelectedListener(new OnItemSelectedListener());
+		mProfessionSpinner.setOnItemSelectedListener(new OnItemSelectedListener());
 		mStateSpinner = (Spinner) findViewById(R.id.state);
 		mStateSpinner.setOnItemSelectedListener(new OnItemSelectedListener());
 	}

@@ -1,7 +1,10 @@
 package com.categoty2.cmetracker;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,11 +14,16 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.GetChars;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class DashBoard extends FragmentActivity {
@@ -37,6 +45,7 @@ public class DashBoard extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	static Context cont;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +54,15 @@ public class DashBoard extends FragmentActivity {
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		SP = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		
+		cont = getApplicationContext();
 
 	}
 
@@ -85,6 +95,20 @@ public class DashBoard extends FragmentActivity {
 		finish();
 		startActivity(nxtIntent);
 	}
+	
+	/*private static DatePickerDialog showDatePicker(final View v){
+		final Calendar cal = new GregorianCalendar();
+		DatePickerDialog myDatePickerDialog = new DatePickerDialog(cont, new DatePickerDialog.OnDateSetListener()  {
+		    @Override
+		    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		    	StringBuilder sb = new StringBuilder("");
+		    	sb.append(monthOfYear+1).append("/").append(dayOfMonth).append("/").append(year);
+		    	((EditText)v).setText(sb.toString());
+		    }
+		} , cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+		return myDatePickerDialog;
+	}*/
+	
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -116,7 +140,7 @@ public class DashBoard extends FragmentActivity {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			Locale l = Locale.getDefault();
+ 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
 				return getString(R.string.title_section1).toUpperCase(l);
@@ -138,22 +162,57 @@ public class DashBoard extends FragmentActivity {
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
+		Spinner mActivityView;
+		EditText mActivityStartDate;
+		EditText mActivityEndDate;
+		DatePickerDialog dpDialog;
+		
 		public static final String ARG_SECTION_NUMBER = "section_number";
 
 		public DummySectionFragment() {
+		}
+		
+		void showDatePicker(final View v){
+			new DatePickerFragment((EditText) v).showDatePickerDialog(v);
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(
-					R.layout.fragment_dash_board_dummy, container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			View rootView = inflater.inflate(R.layout.fragment_dash_board_dummy, container, false);
+			//final TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
+			mActivityView = (Spinner)rootView.findViewById(R.id.spinner1);
+			mActivityStartDate = (EditText) rootView.findViewById(R.id.activity_start_dt);
+			mActivityEndDate = (EditText) rootView.findViewById(R.id.activity_end_dt);
+			
+			mActivityStartDate.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					/*dpDialog = showDatePicker(v);
+					dpDialog.show();*/
+					showDatePicker(v);
+				}
+			});
+			
+			mActivityEndDate.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					/*dpDialog = showDatePicker(v);
+					dpDialog.show();*/
+				}
+			});			
+			/*mActivityView.setOnItemSelectedListener(new OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+					// TODO Auto-generated method stub
+					//super.onItemSelected(parent, view, pos, id);
+					dummyTextView.setText(mActivityView.getSelectedItem().toString());
+				}
+			});*/
+			
+			//dummyTextView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
 			return rootView;
-		}
+		}			
 	}
 
 }
