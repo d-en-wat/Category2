@@ -173,7 +173,7 @@ public class DashBoard extends FragmentActivity {
 		}
 		
 		void showDatePicker(final View v){
-			new DatePickerFragment((EditText) v).showDatePickerDialog(v);
+			//new DatePickerFragment((EditText) v).showDatePickerDialog(v);
 		}
 
 		@Override
