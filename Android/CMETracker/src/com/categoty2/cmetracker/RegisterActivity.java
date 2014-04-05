@@ -67,7 +67,6 @@ public class RegisterActivity extends Activity {
 	private Spinner mProfessionSpinner;
 	private Spinner mStateSpinner;
 	private DatePickerDialog dpDialog;
-	private String date;
 	/*private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;*/
