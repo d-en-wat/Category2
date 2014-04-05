@@ -2,6 +2,9 @@ package com.categoty2.cmetracker;
 
 import java.util.Locale;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +13,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,6 +29,9 @@ public class DashBoard extends FragmentActivity {
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
+	
+	SharedPreferences SP;
+	SharedPreferences.Editor editor;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -44,6 +51,8 @@ public class DashBoard extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
+		SP = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
 	}
 
@@ -52,6 +61,29 @@ public class DashBoard extends FragmentActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.dash_board, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		/*case android.R.id.home:			
+			NavUtils.navigateUpFromSameTask(this);
+			return true;*/
+		case R.id.action_logout:
+			logout();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void logout(){
+		editor = SP.edit();
+		editor.putBoolean("isLoggedIn", false);
+		editor.commit();
+		
+		Intent nxtIntent = new Intent(DashBoard.this, LoginActivity.class);
+		finish();
+		startActivity(nxtIntent);
 	}
 
 	/**

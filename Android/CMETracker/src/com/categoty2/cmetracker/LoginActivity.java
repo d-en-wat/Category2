@@ -30,6 +30,8 @@ public class LoginActivity extends Activity {
 	 * The default email to populate the email field with.
 	 */
 	public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
+	
+	public static final int REQUEST_EXIT = 2;
 
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
@@ -109,24 +111,38 @@ public class LoginActivity extends Activity {
 
 	private void callRegister() {
 		Intent intent = new Intent(this, RegisterActivity.class);
-		finish();
-		startActivity(intent);
+		editor = SP.edit();
+		editor.putString("email", mEmailView.getText().toString());
+		editor.commit();
+		//finish();
+		startActivityForResult(intent, REQUEST_EXIT);
 	}
 	
 	private void callDashBoard(){
 		Intent intent = new Intent(this, DashBoard.class);
-		finish();
+		editor = SP.edit();
+		editor.putBoolean("isLoggedIn", true);
+		editor.commit();
+		finish();		
 		startActivity(intent);
 	}
 	
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_EXIT) {
+			if(resultCode == 2)
+				finish();
+		}
+	}
+	
+	/*@Override
 	public void onPause() {
 	    super.onPause();  // Always call the superclass method first
 	    editor = SP.edit();
 	    editor.putString("email", mEmailView.getText().toString());
 	    editor.putString("pwd", mPasswordView.getText().toString());
 	    editor.commit();
-	}
+	}*/
 
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.

@@ -36,6 +36,7 @@ public class RegisterActivity extends Activity {
 	DataBaseHandler dbHandler;
 	// Values for email and password at the time of the login attempt.
 	SharedPreferences SP;
+	SharedPreferences.Editor editor;
 
 	private String mFirstName;
 	private String mMiddleName;
@@ -67,14 +68,20 @@ public class RegisterActivity extends Activity {
 	private Spinner mProfessionSpinner;
 	private Spinner mStateSpinner;
 	private DatePickerDialog dpDialog;
+		
 	/*private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;*/
 
 	private void nextActivity() {
 		// Code to change to go to next page
-		 Intent intent = new Intent(this, DashBoard.class);
-		 startActivity(intent);
+		Intent intent = new Intent(this, DashBoard.class);
+		editor = SP.edit();
+		editor.putBoolean("isLoggedIn", true);
+		editor.commit();
+		setResult(2);
+		finish();
+		startActivity(intent);
 	}
 
 	@Override
@@ -90,7 +97,7 @@ public class RegisterActivity extends Activity {
 		mEmailView.setText(SP.getString("email", ""));
 		mUserNameView = (EditText) findViewById(R.id.username);
 		mPasswordView = (EditText) findViewById(R.id.reg_password);
-		mPasswordView.setText(SP.getString("pwd", ""));
+		//mPasswordView.setText(SP.getString("pwd", ""));
 		mFirstNameView = (EditText) findViewById(R.id.firstname);
 		mMiddleNameView = (EditText) findViewById(R.id.middlename);
 		mLastNameView = (EditText) findViewById(R.id.lastname);
