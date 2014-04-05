@@ -44,7 +44,6 @@ public class TestDashActivity extends Activity {
 		mActivityView.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				//dummyTextView.setText(mActivityView.getSelectedItem().toString());
 				View lay = findViewById(R.id.inner_dash);
 				if(pos == 0)					
 					lay.setVisibility(View.GONE);
