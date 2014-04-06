@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:orientation="vertical"        
         android:visibility="gone" >
 
         <ProgressBar
@@ -36,7 +36,7 @@
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#A9F5E1" >
+        android:background="@drawable/pattern" >
 
         <LinearLayout
             style="@style/LoginFormContainer"
