@@ -30,6 +30,8 @@ public class TestDashActivity extends Activity {
 	EditText mActivityStartDateView;
 	EditText mActivityEndDateView;
 	EditText mCreditsView;
+	View mInnerLayoutView;
+	
 	DatePickerDialog dpDialog;
 	String userId;
 	DataBaseHandler dbHandler;
@@ -38,22 +40,22 @@ public class TestDashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test_dash);
 
-		SP = getSharedPreferences(LoginActivity.MyPREFERENCES,
-				Context.MODE_PRIVATE);
+		SP = getSharedPreferences(LoginActivity.MyPREFERENCES,Context.MODE_PRIVATE);
 		userId = SP.getString("userid", "");
 		Log.i("TestDashActivity : onCreate : userId from preferences : ", userId);
 		mActivityView = (Spinner) findViewById(R.id.spinner1);
 		mActivityStartDateView = (EditText) findViewById(R.id.activity_start_dt);
 		mActivityEndDateView = (EditText) findViewById(R.id.activity_end_dt);
 		mCreditsView = (EditText)findViewById(R.id.enter_credits);
+		mInnerLayoutView = findViewById(R.id.inner_dash);
+		
 		mActivityView.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				View lay = findViewById(R.id.inner_dash);
 				if(pos == 0)					
-					lay.setVisibility(View.GONE);
+					mInnerLayoutView.setVisibility(View.GONE);
 				else
-					lay.setVisibility(View.VISIBLE);					
+					mInnerLayoutView.setVisibility(View.VISIBLE);			
 			}
 		});
 
@@ -72,7 +74,7 @@ public class TestDashActivity extends Activity {
 				dpDialog.show();
 			}
 		});
-	}
+	}	
 
 	private DatePickerDialog showDatePicker(final View v) {
 		final Calendar cal = new GregorianCalendar();
@@ -160,12 +162,11 @@ public class TestDashActivity extends Activity {
 				long noOfRowsInserted = dbHandler.createTask(activityType, mCredits, userId, "", "", mStartDt, mEndDt);
 				if (noOfRowsInserted > 0) {
 					Log.i("TestDashActivity : onSubmit : RowId Created : ", String.valueOf(noOfRowsInserted));
-					Toast.makeText(getBaseContext(),
-							"Activity Created Successfully", Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(getBaseContext(),"Activity Created Successfully", Toast.LENGTH_LONG).show();
+					mActivityView.setSelection(0);
+					reset();
 				} else {
-					Toast.makeText(getBaseContext(), "Error in Activity Creation",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(getBaseContext(), "Error in Activity Creation",Toast.LENGTH_LONG).show();
 				}
 			}
 		}catch (SQLException exception) {
@@ -177,7 +178,7 @@ public class TestDashActivity extends Activity {
 		} finally {
 			if (dbHandler != null) {
 				dbHandler.close();
-			}
+			}			
 		}
 		Log.i("TestDashActivity : onSubmit : ", "Exit");
 	}
@@ -187,9 +188,16 @@ public class TestDashActivity extends Activity {
 		mCreditsView.setError(null);
 		mActivityStartDateView.setError(null);
 		mActivityEndDateView.setError(null);
+		reset();
+	}
+	
+	private void reset(){
 		mCreditsView.setText("");
 		mActivityStartDateView.setText("");
 		mActivityEndDateView.setText("");
 		mActivityView.setSelection(0);
 	}
 }
+
+
+
