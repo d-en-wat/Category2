@@ -104,37 +104,42 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int writing=0x7f0a0017;
     }
     public static final class layout {
-        public static final int activity_dash_board=0x7f030000;
-        public static final int activity_landing=0x7f030001;
-        public static final int activity_login=0x7f030002;
-        public static final int activity_register=0x7f030003;
-        public static final int activity_start=0x7f030004;
-        public static final int activity_test_dash=0x7f030005;
-        public static final int fragment_dash_board_dummy=0x7f030006;
-        public static final int fragment_dash_dummy=0x7f030007;
+        public static final int activity_create_task=0x7f030000;
+        public static final int activity_dash_board=0x7f030001;
+        public static final int activity_landing=0x7f030002;
+        public static final int activity_login=0x7f030003;
+        public static final int activity_register=0x7f030004;
+        public static final int activity_start=0x7f030005;
+        public static final int activity_test_dash=0x7f030006;
+        public static final int fragment_dash_board_dummy=0x7f030007;
+        public static final int fragment_dash_dummy=0x7f030008;
     }
     public static final class menu {
-        public static final int dash_board=0x7f090000;
-        public static final int login=0x7f090001;
-        public static final int test_dash=0x7f090002;
+        public static final int create_task=0x7f090000;
+        public static final int dash_board=0x7f090001;
+        public static final int login=0x7f090002;
+        public static final int test_dash=0x7f090003;
     }
     public static final class string {
         public static final int action_forgot_password=0x7f060015;
         public static final int action_logout=0x7f06000b;
         public static final int action_register=0x7f060013;
-        public static final int action_reset=0x7f06002f;
+        public static final int action_reset=0x7f060032;
         public static final int action_settings=0x7f060007;
         public static final int action_sign_in=0x7f060012;
         public static final int action_sign_in_short=0x7f060014;
-        public static final int action_submit=0x7f06002e;
-        public static final int activity_end_dt=0x7f06001f;
+        public static final int action_submit=0x7f060031;
+        public static final int activity_end_dt=0x7f060022;
         public static final int activity_select=0x7f06001c;
-        public static final int activity_start_dt=0x7f06001e;
+        public static final int activity_start_dt=0x7f060021;
         public static final int app_name=0x7f060000;
-        public static final int cancel_activity=0x7f060020;
-        public static final int credits=0x7f06001d;
+        public static final int cancel_activity=0x7f060023;
+        public static final int credits=0x7f060020;
         public static final int dummy_button=0x7f060001;
         public static final int dummy_content=0x7f060002;
+        public static final int error_empty_credits=0x7f06001d;
+        public static final int error_empty_task_enddt=0x7f06001f;
+        public static final int error_empty_task_startdt=0x7f06001e;
         public static final int error_field_required=0x7f06001b;
         public static final int error_incorrect_password=0x7f060019;
         public static final int error_incorrect_username_password=0x7f06001a;
@@ -142,51 +147,51 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int error_invalid_password=0x7f060018;
         public static final int hello_world=0x7f06000e;
         public static final int login_progress_signing_in=0x7f060016;
-        public static final int login_progress_signing_up=0x7f06002d;
+        public static final int login_progress_signing_up=0x7f060030;
         /**  Strings related to login 
          */
         public static final int prompt_email=0x7f060010;
         public static final int prompt_password=0x7f060011;
-        public static final int reg_error_empty_email=0x7f060035;
-        public static final int reg_error_empty_expirydt=0x7f060034;
+        public static final int reg_error_empty_email=0x7f060038;
+        public static final int reg_error_empty_expirydt=0x7f060037;
         /**   errors 
          */
-        public static final int reg_error_empty_firstname=0x7f060030;
-        public static final int reg_error_empty_issuedt=0x7f060033;
-        public static final int reg_error_empty_lastname=0x7f060031;
-        public static final int reg_error_empty_password=0x7f060039;
-        public static final int reg_error_empty_stlicense=0x7f060032;
-        public static final int reg_error_empty_username=0x7f060036;
-        public static final int reg_error_field_max_email_length=0x7f06003c;
-        public static final int reg_error_field_more_at_rate=0x7f060040;
-        public static final int reg_error_incorrect_password=0x7f06003b;
-        public static final int reg_error_invalid_email=0x7f060038;
-        public static final int reg_error_justdotatrate=0x7f060041;
-        public static final int reg_error_max_length_pwd=0x7f060043;
-        public static final int reg_error_min_length_email=0x7f060042;
-        public static final int reg_error_noAtTheRate=0x7f06003d;
-        public static final int reg_error_noDot=0x7f06003e;
-        public static final int reg_error_pwd_short=0x7f06003a;
-        public static final int reg_error_user_registered=0x7f060037;
-        public static final int registration_email=0x7f06002a;
+        public static final int reg_error_empty_firstname=0x7f060033;
+        public static final int reg_error_empty_issuedt=0x7f060036;
+        public static final int reg_error_empty_lastname=0x7f060034;
+        public static final int reg_error_empty_password=0x7f06003c;
+        public static final int reg_error_empty_stlicense=0x7f060035;
+        public static final int reg_error_empty_username=0x7f060039;
+        public static final int reg_error_field_max_email_length=0x7f06003f;
+        public static final int reg_error_field_more_at_rate=0x7f060043;
+        public static final int reg_error_incorrect_password=0x7f06003e;
+        public static final int reg_error_invalid_email=0x7f06003b;
+        public static final int reg_error_justdotatrate=0x7f060044;
+        public static final int reg_error_max_length_pwd=0x7f060046;
+        public static final int reg_error_min_length_email=0x7f060045;
+        public static final int reg_error_noAtTheRate=0x7f060040;
+        public static final int reg_error_noDot=0x7f060041;
+        public static final int reg_error_pwd_short=0x7f06003d;
+        public static final int reg_error_user_registered=0x7f06003a;
+        public static final int registration_email=0x7f06002d;
         /**  Strings related to register 
          */
-        public static final int registration_first_name=0x7f060023;
-        public static final int registration_last_name=0x7f060025;
-        public static final int registration_license_expiry_date=0x7f060028;
-        public static final int registration_license_issue_date=0x7f060027;
-        public static final int registration_license_number=0x7f060026;
-        public static final int registration_middle_name=0x7f060024;
-        public static final int registration_password=0x7f06002c;
-        public static final int registration_prompt_profession=0x7f06003f;
-        public static final int registration_prompt_state=0x7f060044;
-        public static final int registration_telephone=0x7f060029;
-        public static final int registration_username=0x7f06002b;
-        public static final int submit_activity=0x7f060021;
+        public static final int registration_first_name=0x7f060026;
+        public static final int registration_last_name=0x7f060028;
+        public static final int registration_license_expiry_date=0x7f06002b;
+        public static final int registration_license_issue_date=0x7f06002a;
+        public static final int registration_license_number=0x7f060029;
+        public static final int registration_middle_name=0x7f060027;
+        public static final int registration_password=0x7f06002f;
+        public static final int registration_prompt_profession=0x7f060042;
+        public static final int registration_prompt_state=0x7f060047;
+        public static final int registration_telephone=0x7f06002c;
+        public static final int registration_username=0x7f06002e;
+        public static final int submit_activity=0x7f060024;
         public static final int title_activity_dash=0x7f06000c;
         public static final int title_activity_dash_board=0x7f060006;
         public static final int title_activity_login=0x7f06000f;
-        public static final int title_activity_register=0x7f060022;
+        public static final int title_activity_register=0x7f060025;
         public static final int title_activity_test_dash=0x7f06000d;
         public static final int title_dashboard_detail=0x7f060005;
         public static final int title_dashboard_list=0x7f060004;

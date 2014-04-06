@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
+	public static final String MyPREFERENCES = "MyPreferences" ;
 	private UserRegistrationTask mAuthTask = null;
 	private static int counter =0;
 	Button submit;
@@ -206,9 +207,6 @@ public class RegisterActivity extends Activity {
 	public void addStatesSpinner() {
 		mStateSpinner = (Spinner) findViewById(R.id.state);
 		List<String> stateList = new ArrayList<String>();
-		
-		
-			
 			stateList.add("-SELECT STATE-");
 			stateList.add("KANSAS");
 			stateList.add("MICHIGAN");
@@ -402,6 +400,9 @@ public class RegisterActivity extends Activity {
 						mUserName, mPassword);
 
 				if (rowsInserted > 0) {
+					editor = SP.edit();
+					editor.putString("userid", mUserNameView.getText().toString());
+					editor.commit();
 					/*
 					 * SharedPreferences settings =
 					 * getSharedPreferences(PREFRENCES_NAME,

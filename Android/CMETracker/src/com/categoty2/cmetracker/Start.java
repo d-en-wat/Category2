@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 
 
@@ -19,7 +20,9 @@ public class Start extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 		
-		SP = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);		
+		SP = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+		Boolean isLoogedInRes = SP.getBoolean("isLoggedIn", false);
+		Log.i("StartActivity : onCreate : isLoggedIn : ", isLoogedInRes.toString());
 		if(SP.getBoolean("isLoggedIn", false)){
 			nxtIntent = new Intent(Start.this, TestDashActivity.class);
 		}else{

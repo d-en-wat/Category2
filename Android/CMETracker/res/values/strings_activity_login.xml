@@ -16,7 +16,11 @@
     <string name="error_incorrect_username_password">username/password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="activity_select">Select Activity</string>
-
+	
+    <string name="error_empty_credits">Credits cannot be empty</string>
+    <string name="error_empty_task_startdt">Start Date cannot be empty</string>
+    <string name="error_empty_task_enddt">End Date cannot be empty</string>
+    
     <string-array name="activity_types">
         <item>SELECT ACTIVITY</item>
         <item>Teaching</item>

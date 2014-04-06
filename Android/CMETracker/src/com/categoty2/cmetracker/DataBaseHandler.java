@@ -1,6 +1,7 @@
 package com.categoty2.cmetracker;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -42,6 +43,20 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	public static final String STATE_DETAILS_TABLE_NAME = "STATE_DETAILS";
 	public static final String STATE_DETAILS_STATE_ID = "STATE_ID";
 	public static final String STATE_DESC = "STATE_DESC";
+	
+	// Table ACTIVITY_DETAILS and details related
+	public static final String ACTIVITY_DETAILS_TABLE_NAME = "ACTIVITY_DETAILS";
+	public static final String ACTIVITY_ID = "ACTIVITY_ID";
+	public static final String ACTIVITY_TYPE = "ACTIVITY_TYPE";
+	public static final String CREATION_DATE = "CREATION_DATE";
+	public static final String CREDITS = "CREDITS";
+	public static final String ACTIVITY_DETAILS_USER_ID = "USER_ID";
+	public static final String DURATION = "DURATION";
+	public static final String FREQUENCY = "FREQUENCY";
+	public static final String START_DT = "START_DT";
+	public static final String END_DT = "END_DT";
+	
+	
 
 	public static final String PRAGMA = " PRAGMA foreign_keys = ON ; ";
 
@@ -60,6 +75,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
 	public static final String STATE_DETAILS_CREATE = " CREATE TABLE "
 			+ STATE_DETAILS_TABLE_NAME + "( STATE_ID INT, STATE_DESC TEXT ); ";
+	
+	public static final String ACTIVITY_DETAILS_CREATE = " CREATE TABLE "
+			+ ACTIVITY_DETAILS_TABLE_NAME + "( "
+			+ "ACTIVITY_TYPE TEXT,CREATION_DATE DATETIME NOT NULL DEFAULT CURRENT_DATE, CREDITS INT,USER_ID LONG UNIQUE,DURATION TEXT, FREQUENCY TEXT,"
+			+ " START_DT DATETIME, END_DT DATETIME CHECK(END_DT >= START_DT),ACTIVITY_ID LONG UNIQUE, PRIMARY KEY (USER_ID, ACTIVITY_ID),"
+			+ " FOREIGN KEY (USER_ID) REFERENCES USER_DETAILS(USER_ID) ); ";
+	
 
 	public DataBaseHandler(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
@@ -89,6 +111,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 			db.execSQL(STATE_DETAILS_CREATE);
 			Log.i("DataBaseHandler : onCreate : ",
 					"INSERTED STATE_DETAILS TABLE Successfully");
+			Log.i("DataBaseHandler : onCreate : ",
+					"Query to create table ACTIVITY_DETAILS : "
+							+ ACTIVITY_DETAILS_CREATE);
+			db.execSQL(ACTIVITY_DETAILS_CREATE);
+			Log.i("DataBaseHandler : onCreate : ",
+					"INSERTED ACTIVITY_DETAILS TABLE Successfully");
 			
 		} catch (SQLException exception) {
 			Log.e("DataBaseHandler : onCreate : ", "SQLException Occured");
@@ -468,4 +496,95 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 		}*/
 		return null;
 	}
+	
+	public Long createTask(String activityType, String credits,
+			String userId, String duration, String frequency,
+			String startDate, String endDate) {
+
+		SQLiteDatabase sqlDB = this.getWritableDatabase();
+		sqlDB.beginTransaction();
+		try {
+			ContentValues taskContent = new ContentValues();
+			Date todayDate = new Date();
+			taskContent.put(ACTIVITY_TYPE, activityType);
+			taskContent.put(CREATION_DATE, todayDate.toString());
+			taskContent.put(CREDITS, credits);
+			taskContent.put(ACTIVITY_DETAILS_USER_ID, userId);
+			taskContent.put(DURATION, duration);
+			taskContent.put(FREQUENCY, frequency);
+			taskContent.put(START_DT, startDate);
+			taskContent.put(END_DT, endDate);
+			Long activityIDLong = getMaxActivityId();
+			Log.i("DataBaseHandler Activity : createTask : ActivityID after querying Table", String.valueOf(activityIDLong));
+			if (activityIDLong == -1) {
+				return -1L;
+			}
+			activityIDLong++;
+			taskContent.put(ACTIVITY_ID, String.valueOf(activityIDLong));
+			Long rowCountInsertedActivityDetails = sqlDB.insert(ACTIVITY_DETAILS_TABLE_NAME, null, taskContent);
+			Log.i("DataBaseHandler Activity : createTask : RowID inserted : ", String.valueOf(rowCountInsertedActivityDetails));
+			if (rowCountInsertedActivityDetails > 0) {
+				if (sqlDB.inTransaction()) {
+					sqlDB.setTransactionSuccessful();
+				}
+				return rowCountInsertedActivityDetails;
+			} else {
+				if (sqlDB.inTransaction()) {
+					sqlDB.endTransaction();
+				}
+				return -1L;
+			}
+
+		} catch (SQLException e) {
+			Log.e("DataHandler : createTask(): ", "SQLException");
+			Log.e("DataHandler : createTask(): ", "SQLException", e);
+
+		} catch (Exception e) {
+			Log.e("DataHandler : createTask(): ", "Exception");
+			Log.e("DataHandler : createTask(): ", "Exception", e);
+
+		} finally {
+			if (sqlDB.inTransaction()) {
+				sqlDB.endTransaction();
+			}
+			
+		}
+		return -1L;
+	}
+
+	public long getMaxActivityId() {
+		SQLiteDatabase sqlDB = this.getReadableDatabase();
+		try {
+
+			if (sqlDB != null) {
+				String maxQuery = "SELECT MAX(ACTIVITY_ID) FROM "
+						+ ACTIVITY_DETAILS_TABLE_NAME + " ; ";
+				Long maxUserId = -1L;
+				Cursor c = sqlDB.rawQuery(maxQuery, null);
+				if (null != c && c.getCount() > 0) {
+					c.moveToFirst();
+					maxUserId = Long.valueOf(c.getLong(0));
+				}
+				if (maxUserId == null || maxUserId == -1) {
+					maxUserId = 0L;
+				}
+				return maxUserId;
+			}
+		} catch (SQLException e) {
+			Log.e("DataBaseHandler : getMaxActivityId() : ", "SQLException occured");
+			Log.e("DataBaseHandler : getMaxActivityId() : ",
+					"SQLException occured", e);
+		} catch (Exception e) {
+			Log.e("DataBaseHandler : getMaxActivityId() : ", "Exception occured");
+			Log.e("DataBaseHandler : getMaxActivityId() : ", "Exception occured", e);
+		} /*finally {
+			if (sqlDB.inTransaction()) {
+				sqlDB.endTransaction();
+			}
+			
+		}*/
+		return -1;
+	}
+	
+	
 }
