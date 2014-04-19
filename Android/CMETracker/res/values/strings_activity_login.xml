@@ -1,0 +1,56 @@
+<resources>
+
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in"><b>Sign in</b></string>
+    <string name="action_register"><b>Register</b></string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_forgot_password">Recover lost password</string>
+    <string name="login_progress_signing_in">Signing in&#8230;</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_incorrect_username_password">username/password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="activity_select">Select Activity</string>
+	
+    <string name="error_empty_credits">Credits cannot be empty</string>
+    <string name="error_empty_task_startdt">Start Date cannot be empty</string>
+    <string name="error_empty_task_enddt">End Date cannot be empty</string>
+    
+    <string-array name="activity_types">
+        <item>SELECT ACTIVITY</item>
+        <item>Teaching</item>
+        <item>Online Learning</item>
+        <item>Reading</item>
+        <item>Peer Consultation</item>
+        <item>Discussion</item>
+        <item>Self-Assessment</item>
+        <item>Writing</item>
+        <item>Preceptor ship</item>
+        <item>Research</item>
+        <item>Peer Review</item>
+        <item>Non-Certified Activities</item>
+    </string-array>
+
+    <string name="credits">Credits</string>
+    <string name="activity_start_dt">Start Date</string>
+    <string name="activity_end_dt">End Date</string>
+    <string name="cancel_activity">Cancel</string>
+    <string name="submit_activity">Submit</string>
+
+</resources>
+
+
+
+
+
+
+
+
+
+
+
